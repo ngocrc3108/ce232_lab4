@@ -27,7 +27,7 @@
    If you'd rather not, just change the below entries to strings with
    the config you want - ie #define EXAMPLE_WIFI_SSID "mywifissid"
 */
-#define WIFI_SSID "realme GT Neo2"
+#define WIFI_SSID "MSI"
 #define WIFI_PASS "31082003"
 #define ESP_MAXIMUM_RETRY  5
 

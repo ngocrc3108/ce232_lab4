@@ -1,6 +1,6 @@
-#include <stdio.h>
 #include "connection/wifi.h"
 #include "connection/mqtt.h"
+#include "connection/ble.h"
 #include "esp_log.h"
 
 void app_main(void) {
@@ -13,4 +13,5 @@ void app_main(void) {
 
     wifi_init_sta();
     mqtt_init();
+    ble_init();
 }

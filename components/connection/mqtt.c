@@ -33,6 +33,7 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
     switch ((esp_mqtt_event_id_t)event_id) {
     case MQTT_EVENT_CONNECTED:
         ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
+        esp_mqtt_client_subscribe(event->client, "lab4/mqtt", 0);
         break;
     case MQTT_EVENT_DISCONNECTED:
         ESP_LOGI(TAG, "MQTT_EVENT_DISCONNECTED");
@@ -49,10 +50,8 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
         break;
     case MQTT_EVENT_DATA:
         ESP_LOGI(TAG, "MQTT_EVENT_DATA");
-        char query_string[50];
-        char topic[50];
-        sprintf(query_string, "%.*s", event->data_len, event->data);
-        sprintf(topic, "%.*s", event->topic_len, event->topic);
+        printf("TOPIC=%.*s\r\n", event->topic_len, event->topic);
+        printf("DATA=%.*s\r\n", event->data_len, event->data);
         break;
     case MQTT_EVENT_ERROR:
         ESP_LOGI(TAG, "MQTT_EVENT_ERROR");
@@ -70,13 +69,13 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
 }
 
 void mqtt_init(void) {
-    char last_will_message[1024];
+    // char last_will_message[1024];
     esp_mqtt_client_config_t mqtt_cfg = {
         .broker.address.uri = MQTT_URL,
         .credentials.username = MQTT_USERNAME,
-        .session.last_will.topic = "esp/disconnect",
-        .session.last_will.msg = last_will_message,
-        .session.keepalive = 10,
+        // .session.last_will.topic = "esp/disconnect",
+        // .session.last_will.msg = last_will_message,
+        // .session.keepalive = 10,
     };
 
     mqtt_client = esp_mqtt_client_init(&mqtt_cfg);
