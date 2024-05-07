@@ -96,3 +96,7 @@ void mqtt_init(void) {
     esp_mqtt_client_register_event(mqtt_client, ESP_EVENT_ANY_ID, mqtt_event_handler, NULL);
     esp_mqtt_client_start(mqtt_client);
 }
+
+void mqtt_publish(uint8_t* data, uint16_t len) {
+    esp_mqtt_client_publish(mqtt_client, "BLE_WRITE", (char*)data, (int)len, 0, 0);
+}

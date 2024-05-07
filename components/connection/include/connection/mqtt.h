@@ -15,8 +15,6 @@
 #define MQTT_URL "mqtt://mqtt.flespi.io"
 #define MQTT_USERNAME "uOtUTWCg12RiQ0oWmGCmTwEawGezbS4uwlcg7FkWv15bQhW0NoavLCt58xu8dosx"
 
-extern esp_mqtt_client_handle_t mqtt_client;
-
 void log_error_if_nonzero(const char *message, int error_code);
 
 /*
@@ -32,5 +30,5 @@ void log_error_if_nonzero(const char *message, int error_code);
 void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data);
 
 void mqtt_init(void);
-
+void mqtt_publish(uint8_t* data, uint16_t len);
 #endif
