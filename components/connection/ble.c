@@ -114,25 +114,11 @@ static esp_ble_adv_params_t adv_params = {
 
 #define PROFILE_APP_ID 0
 
-struct gatts_profile_inst {
-    esp_gatts_cb_t gatts_cb;
-    uint16_t gatts_if;
-    uint16_t app_id;
-    uint16_t conn_id;
-    uint16_t service_handle;
-    esp_gatt_srvc_id_t service_id;
-    uint16_t char_handle;
-    esp_bt_uuid_t char_uuid;
-    esp_gatt_perm_t perm;
-    esp_gatt_char_prop_t property;
-    uint16_t descr_handle;
-    esp_bt_uuid_t descr_uuid;
-};
-
 /* One gatt-based profile one app_id and one gatts_if, this instant will store the gatts_if returned by ESP_GATTS_REG_EVT */
-static struct gatts_profile_inst app_profile = {
+struct gatts_profile_inst app_profile = {
     .gatts_cb = gatts_profile_event_handler,
     .gatts_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
+    .conn_id = 0,
 };
 
 typedef struct {

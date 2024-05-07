@@ -21,7 +21,10 @@
         "device.h": "c",
         "stdint.h": "c",
         "mqtt.h": "c",
-        "sockets.h": "c"
+        "sockets.h": "c",
+        "btc_manage.h": "c",
+        "stdio.h": "c",
+        "esp_gatts_api.h": "c"
     },
     "idf.flashType": "UART"
 }

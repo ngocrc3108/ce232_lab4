@@ -4,6 +4,10 @@
 #include "connection/mqtt.h"
 #include "esp_log.h"
 #include "string.h"
+#include "esp_gatts_api.h"
+#include "connection/ble.h"
+
+#define BUFFER_SIZE 1024
 
 esp_mqtt_client_handle_t mqtt_client;
 
@@ -52,6 +56,15 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
         ESP_LOGI(TAG, "MQTT_EVENT_DATA");
         printf("TOPIC=%.*s\r\n", event->topic_len, event->topic);
         printf("DATA=%.*s\r\n", event->data_len, event->data);
+        char notify_data[BUFFER_SIZE];
+        sprintf(notify_data, "%.*s: %.*s", event->topic_len, event->topic, event->data_len, event->data);
+        esp_err_t ret = esp_ble_gatts_send_indicate(app_profile.gatts_if, app_profile.conn_id, app_profile.char_handle,
+                strlen(notify_data), (uint8_t*)notify_data, false);
+        if(ret == ESP_OK) {
+            ESP_LOGI("DEBUG", "send indicate successfully");
+        } else {
+            ESP_LOGI("DEBUG", "send indicate fail");
+        }
         break;
     case MQTT_EVENT_ERROR:
         ESP_LOGI(TAG, "MQTT_EVENT_ERROR");
